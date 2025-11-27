@@ -37,6 +37,43 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   my_new_project:
+<<<<<<< HEAD
     # Applies to all files under models/example/
     example:
       +materialized: table
+=======
+<<<<<<< HEAD
+    # Applies to all files under models/example/
+    example:
+      +materialized: table
+=======
+    staging:
+     finance:
+    # 🔹 Global pre-hook: set a useful Snowflake QUERY_TAG for all models in this project
+    +pre-hook:
+      - "ALTER SESSION SET QUERY_TAG = 'dbt:{{ this }}:{{ invocation_id }}';"
+
+    # 🔹 Global post-hook: log each model run into an audit table (safe, append-only)
+    +post-hook:
+      - >
+        INSERT INTO analytics.model_run_audit (
+          model_name,
+          run_at,
+          row_count,
+          run_id
+        )
+        SELECT
+          '{{ this }}' AS model_name,
+          CURRENT_TIMESTAMP() AS run_at,
+          COUNT(*) AS row_count,
+          '{{ invocation_id }}' AS run_id
+        FROM {{ this }}
+
+    # Applies to all files under models/example/
+    example:
+      +materialized: table
+
+
+
+>>>>>>> 2f1790e594f6f28aafe2287d5adba09193a84f67
+>>>>>>> 532633726b50383c0001c9f1e361f30968aa613d
