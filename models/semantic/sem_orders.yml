@@ -1,0 +1,71 @@
+version: 2
+
+semantic_models:
+  - name: orders_semantic
+    description: "Orders at the order_id grain"
+    model: ref('fct_orders') # points to ANALYTICS_DB.ANALYTICS.FCT_ORDERS
+
+    defaults:
+      agg_time_dimension: metric_time
+
+    entities:
+      - name: order
+        type: primary
+        expr: order_id
+
+      - name: customer
+        type: foreign
+        expr: customer_id
+
+    dimensions:
+      - name: metric_time
+        type: time
+        expr: ordered_at
+        type_params:
+          time_granularity: day
+
+      - name: country
+        type: categorical
+        expr: country
+
+      - name: is_new_customer
+        type: categorical
+        expr: "case when first_order_date = ordered_at::date then true else false end"
+
+    measures:
+      - name: order_revenue_measure
+        agg: sum
+        expr: order_total
+        description: "Total revenue from orders"
+
+      - name: orders_measure
+        agg: count_distinct
+        expr: order_id
+        description: "Number of distinct orders"
+
+metrics:
+  - name: order_revenue
+    type: simple
+    label: "Order revenue"
+    type_params:
+      measure: order_revenue_measure
+
+  - name: orders_count
+    type: simple
+    label: "Orders count"
+    type_params:
+      measure: orders_measure
+
+saved_queries:
+  - name: revenue_by_month_country
+    description: "Monthly order revenue and order count by country"
+    query_params:
+      metrics:
+        - order_revenue
+        - orders_count
+      group_by:
+        - metric_time__month
+        - country
+      # optional filter example:
+      # where:
+      #   - "{{ TimeDimension('metric_time', 'day') >= '2024-01-01' }}"
