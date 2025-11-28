@@ -1,4 +1,4 @@
--- models/marts/time_spine_daily.sql
+
 {{ config(materialized='table') }}
 
 with base_dates as (
@@ -14,4 +14,4 @@ with base_dates as (
 select cast(date_day as date) as date_day
 from base_dates
 where date_day > dateadd(year, -5, current_date())
-  and date_day < dateadd(day, 30, current_date());
+  and date_day < dateadd(day, 30, current_date())
