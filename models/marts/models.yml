@@ -4,7 +4,7 @@ models:
   - name: time_spine_daily
     description: "A time spine with one row per day, from ~5 years back to 30 days forward."
     time_spine:
-      standard_granularity_column: date_day   # base column for time joins
+      standard_granularity_column: date_day
 
     columns:
       - name: date_day
