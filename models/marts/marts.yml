@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "Fact table of customer orders"
+    columns:
+      - name: order_id
+        description: "Primary key for an order"
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: "Customer placing the order"
+        tests:
+          - not_null
+
+      - name: ordered_at
+        description: "Timestamp when order was placed"
+
+      - name: order_total
+        description: "Total value of the order in currency units"
+        tests:
+          - not_null
+
+      - name: country
+        description: "Customer country"

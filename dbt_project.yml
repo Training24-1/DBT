@@ -36,8 +36,6 @@ models:
   my_new_project:
     # 🔧 DEFAULTS FOR ALL MODELS IN THIS PROJECT
     # Adjust DATABASE and SCHEMA to match your Snowflake setup
-    +database: ANALYTICS_DB
-    +schema: analytics
     +materialized: view
 
     # 🔹 Global pre-hook: set a useful Snowflake QUERY_TAG for all models
@@ -72,22 +70,18 @@ models:
 
     # 📂 STAGING LAYER (models/staging/)
     staging:
-      +schema: analytics
       +materialized: view
 
       # you can further nest, e.g. models/staging/finance/
-      finance:
-        +materialized: view
+
 
     # 📂 MARTS LAYER (models/marts/)
     marts:
-      +schema: analytics
       +materialized: table  # facts/dims as tables by default
 
     # 📂 SEMANTIC LAYER FILES (models/semantic/)
     # YAML files defining semantic_models, metrics, saved_queries
     semantic:
-      +schema: analytics
       +materialized: view  # usually irrelevant; these are YAML-only
 
     # 📂 EXAMPLE FOLDER (if you still use the starter example models)
