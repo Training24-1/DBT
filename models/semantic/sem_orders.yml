@@ -3,10 +3,10 @@ version: 2
 semantic_models:
   - name: orders_semantic
     description: "Orders at the order_id grain"
-    model: ref('fct_orders') # points to ANALYTICS_DB.ANALYTICS.FCT_ORDERS
+    model: ref('fct_orders')  # points to ANALYTICS_DB.ANALYTICS.FCT_ORDERS
 
     defaults:
-      agg_time_dimension: metric_time
+      agg_time_dimension: order_time
 
     entities:
       - name: order
@@ -18,7 +18,7 @@ semantic_models:
         expr: customer_id
 
     dimensions:
-      - name: metric_time
+      - name: order_time
         type: time
         expr: ordered_at
         type_params:
@@ -64,8 +64,5 @@ saved_queries:
         - order_revenue
         - orders_count
       group_by:
-        - metric_time__month
+        - order_time__month
         - country
-      # optional filter example:
-      # where:
-      #   - "{{ TimeDimension('metric_time', 'day') >= '2024-01-01' }}"
