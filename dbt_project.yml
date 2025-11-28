@@ -87,7 +87,7 @@ models:
     # 📂 SEMANTIC LAYER FILES (models/semantic/)
     # YAML files defining semantic_models, metrics, saved_queries
     semantic:
-      +schema: semantic
+      +schema: analytics
       +materialized: view  # usually irrelevant; these are YAML-only
 
     # 📂 EXAMPLE FOLDER (if you still use the starter example models)
