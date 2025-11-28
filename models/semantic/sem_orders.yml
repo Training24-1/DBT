@@ -3,7 +3,7 @@ version: 2
 semantic_models:
   - name: orders_semantic
     description: "Orders at the order_id grain"
-    model: ref('fct_orders')  # points to ANALYTICS_DB.ANALYTICS.FCT_ORDERS
+    model: ref('fct_orders') 
 
     defaults:
       agg_time_dimension: order_time
