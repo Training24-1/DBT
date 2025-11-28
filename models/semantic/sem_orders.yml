@@ -55,15 +55,3 @@ metrics:
     label: "Orders count"
     type_params:
       measure: orders_measure
-
-saved_queries:
-  - name: revenue_by_month_country
-    label: "revenue by month country"
-    description: "Monthly order revenue and order count by country"
-    query_params:
-      metrics:
-        - order_revenue
-        - orders_count
-      group_by:
-        - "{{ TimeDimension('order__order_time', 'month') }}"
-        - "{{ Dimension('order__country') }}"
